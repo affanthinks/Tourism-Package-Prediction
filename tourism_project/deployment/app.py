@@ -15,74 +15,87 @@ st.write("The tourism Prediction App is an internal tool for tourism staff that 
 st.write("Kindly enter the customer details to check whether they are likely to purchase.")
 
 # Collect user input
-Age = st.number_input("Age (Age of the customer)", min_value=0, max_value=120, value=30)
+Age = st.number_input("Age (Age of the customer)", min_value=18, max_value=120, value=30)
 
 TypeofContact = st.selectbox(
-    "Type of Contact (how the customer was contacted)", 
-    ["Company Invited", "Self Inquiry"]
+    "Type of Contact",
+    ["Self Enquiry", "Company Invited"]
 )
 
 CityTier = st.selectbox(
-    "City Tier (city category based on development)", 
+    "City Tier",
     [1, 2, 3]
 )
 
 Occupation = st.selectbox(
-    "Occupation (customer’s occupation)", 
-    ["Salaried", "Self Employed", "Freelancer", "Student", "Housewife", "Other"]
+    "Occupation",
+    ["Salaried", "Free Lancer", "Small Business", "Large Business"]
 )
 
 Gender = st.selectbox(
-    "Gender", 
-    ["Male", "Female"]
+    "Gender",
+    ["Female", "Male", "Fe Male"]
 )
 
 NumberOfPersonVisiting = st.number_input(
-    "Number of Persons Visiting (including the customer)", 
+    "Number of Persons Visiting",
     min_value=1, max_value=20, value=2
 )
 
-PreferredPropertyStar = st.selectbox(
-    "Preferred Property Star Rating", 
-    [1, 2, 3, 4, 5]
-)
+PreferredPropertyStar = st.selectbox("Preferred Property Star Rating", [3, 4, 5])
+
 
 MaritalStatus = st.selectbox(
-    "Marital Status", 
-    ["Single", "Married", "Divorced"]
+    "Marital Status",
+    ["Single", "Divorced", "Married", "Unmarried"]
 )
 
-NumberOfTrips = st.number_input(
-    "Number of Trips Annually", 
-    min_value=0, max_value=50, value=1
-)
+NumberOfTrips = st.number_input("Number of Trips Annually", min_value=1, max_value=22, value=1)
+
 
 Passport = st.selectbox(
-    "Passport (Does the customer hold a passport?)", 
+    "Passport",
     ["Yes", "No"]
 )
 
 OwnCar = st.selectbox(
-    "Own Car (Does the customer own a car?)", 
+    "Own Car",
     ["Yes", "No"]
 )
 
 NumberOfChildrenVisiting = st.number_input(
-    "Number of Children Visiting (below age 5)", 
+    "Number of Children Visiting (below 5)",
     min_value=0, max_value=10, value=0
 )
 
 Designation = st.selectbox(
-    "Designation in Current Organization", 
-    ["Executive", "Manager", "Senior Manager", "AVP", "VP", "Other"]
+    "Designation",
+    ["Manager", "Executive", "Senior Manager", "AVP", "VP"]
 )
 
 MonthlyIncome = st.number_input(
-    "Monthly Income (Gross monthly income)", 
-    min_value=0.0, value=50000.0
+    "Monthly Income",
+    min_value=1000.0, value=50000.0
 )
 
-# Convert categorical + numeric inputs into a dataframe that matches the model training
+# NEW REQUIRED FIELDS
+PitchSatisfactionScore = st.slider("Pitch Satisfaction Score", 1, 5, 3)
+
+
+ProductPitched = st.selectbox(
+    "Product Pitched",
+    ["Deluxe", "Basic", "Standard", "Super Deluxe", "King"]
+)
+
+NumberOfFollowups = st.number_input(
+    "Number Of Follow-ups",
+    min_value=0, max_value=50, value=1
+)
+
+DurationOfPitch = st.number_input("Duration of Pitch (minutes)", min_value=5, max_value=127, value=10)
+
+
+# Create dataframe for model
 input_data = pd.DataFrame([{
     'Age': Age,
     'TypeofContact': TypeofContact,
@@ -97,7 +110,12 @@ input_data = pd.DataFrame([{
     'OwnCar': 1 if OwnCar == "Yes" else 0,
     'NumberOfChildrenVisiting': NumberOfChildrenVisiting,
     'Designation': Designation,
-    'MonthlyIncome': MonthlyIncome
+    'MonthlyIncome': MonthlyIncome,
+    # REQUIRED new fields
+    'PitchSatisfactionScore': PitchSatisfactionScore,
+    'ProductPitched': ProductPitched,
+    'NumberOfFollowups': NumberOfFollowups,
+    'DurationOfPitch': DurationOfPitch
 }])
 
 
